@@ -7,6 +7,8 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('Integration Test', (tester) async {
+    final providerKey = GlobalKey();
+    app.main(list: [], providerKey: providerKey);
     app.main();
     await tester.pumpAndSettle();
 
