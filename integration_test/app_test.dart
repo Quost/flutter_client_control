@@ -1,3 +1,4 @@
+import 'package:client_control/models/clients.dart';
 import 'package:client_control/models/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -79,8 +80,9 @@ void main() {
     await tester.tap(find.byType(FloatingActionButton));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byKey(Key('NameKey1')), 'DandaraBot');
-    await tester.enterText(find.byKey(Key('EmailKey1')), 'dandara@bot.com.br');
+    await tester.enterText(find.byKey(const Key('NameKey1')), 'DandaraBot');
+    await tester.enterText(
+        find.byKey(const Key('EmailKey1')), 'dandara@bot.com.br');
 
     await tester.tap(find.byIcon(Icons.arrow_downward));
     await tester.pumpAndSettle();
@@ -90,5 +92,22 @@ void main() {
 
     await tester.tap(find.text('Salvar'));
     await tester.pumpAndSettle();
+
+    //Testando se o Cliente apareceu devidamente
+    expect(find.text('DandaraBot (Ferro)'), findsOneWidget);
+    expect(find.byIcon(Icons.card_giftcard), findsOneWidget);
+
+    expect(
+        Provider.of<Clients>(providerKey.currentContext!, listen: false)
+            .clients
+            .last
+            .name,
+        'DandaraBot');
+    expect(
+        Provider.of<Clients>(providerKey.currentContext!, listen: false)
+            .clients
+            .last
+            .email,
+        'dandara@bot.com.br');
   });
 }
