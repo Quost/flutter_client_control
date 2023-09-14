@@ -36,7 +36,7 @@ void main() {
     expect(find.text('Titanium'), findsOneWidget);
     expect(find.text('Diamond'), findsOneWidget);
 
-    // Testar a criação de um Tipo de Cliente
+    // Testando a criação de um Tipo de Cliente
 
     await tester.tap(find.byType(FloatingActionButton));
     await tester.pumpAndSettle();
@@ -53,5 +53,27 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Ferro'), findsOneWidget);
     expect(find.byIcon(Icons.card_giftcard), findsOneWidget);
+
+    // Testando novo Cliente
+    await tester.tap(find.byIcon(Icons.menu));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Gerenciar clientes'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byKey(Key('NameKey1')), 'DandaraBot');
+    await tester.enterText(find.byKey(Key('EmailKey1')), 'dandara@bot.com.br');
+
+    await tester.tap(find.byIcon(Icons.arrow_downward));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Ferro').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Salvar'));
+    await tester.pumpAndSettle();
   });
 }
