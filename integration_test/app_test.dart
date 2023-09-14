@@ -1,7 +1,9 @@
+import 'package:client_control/models/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:client_control/main.dart' as app;
+import 'package:provider/provider.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -9,9 +11,7 @@ void main() {
   testWidgets('Integration Test', (tester) async {
     final providerKey = GlobalKey();
     app.main(list: [], providerKey: providerKey);
-    app.main();
     await tester.pumpAndSettle();
-
     //Testando tela inicial
     expect(find.text('Clientes'), findsOneWidget);
     expect(find.byIcon(Icons.menu), findsOneWidget);
@@ -39,7 +39,6 @@ void main() {
     expect(find.text('Diamond'), findsOneWidget);
 
     // Testando a criação de um Tipo de Cliente
-
     await tester.tap(find.byType(FloatingActionButton));
     await tester.pumpAndSettle();
     expect(find.byType(AlertDialog), findsOneWidget);
@@ -55,6 +54,20 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Ferro'), findsOneWidget);
     expect(find.byIcon(Icons.card_giftcard), findsOneWidget);
+
+    expect(
+        Provider.of<Types>(providerKey.currentContext!, listen: false)
+            .types
+            .last
+            .name,
+        'Ferro');
+
+    expect(
+        Provider.of<Types>(providerKey.currentContext!, listen: false)
+            .types
+            .last
+            .icon,
+        Icons.card_giftcard);
 
     // Testando novo Cliente
     await tester.tap(find.byIcon(Icons.menu));
